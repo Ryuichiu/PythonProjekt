@@ -20,12 +20,11 @@ class Alarm:
     # motion sensor
     GPIO.setup(MOTION_SENSOR_PIN, GPIO.IN)
 
-    @staticmethod
     def start_alarm():
         def start_loop():
             Alarm.alarmIsOn = True
             sleeper = 0.5
-            while Alarm.alarmIsOn:
+            while():
                 GPIO.output(Alarm.LED_PIN, GPIO.HIGH)
                 time.sleep(sleeper)
                 GPIO.output(Alarm.LED_PIN, GPIO.LOW)
@@ -33,7 +32,6 @@ class Alarm:
 
         threading.Thread(target=start_loop).start()
 
-    @staticmethod
     def stop_alarm():
         Alarm.alarmIsOn = False
 
