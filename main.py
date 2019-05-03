@@ -1,5 +1,6 @@
 import time
 
+import MySQLdb
 import RPi.GPIO as GPIO
 
 # Pins
@@ -16,7 +17,10 @@ GPIO.output(11, GPIO.LOW)
 GPIO.setup(MOTION_SENSOR_PIN, GPIO.IN)
 
 # Datenbank
-
+db = MySQLdb.connect(host="localhost",
+                     user="john",
+                     passwd="megajonhy",
+                     db="jonhydb")
 
 # Initialisierung
 Read = 0
@@ -30,6 +34,23 @@ def blink_led(times=3):
         GPIO.output(LED_PIN, GPIO.LOW)
         time.sleep(0.5)
 
+
+# JUST FOR TESTING REASONS:
+# -----------------------------------------------------------------
+# you must create a Cursor object. It will let
+#  you execute all the queries you need
+cursor = db.cursor()
+
+# Use all the SQL you like
+cursor.execute("SELECT * FROM YOUR_TABLE_NAME")
+
+# print all the first cell of all the rows
+for row in cursor.fetchall():
+    print row[0]
+
+db.close()
+
+# -----------------------------------------------------------------
 
 try:
     print("Waiting, until PIR is in sleep mode ...")
