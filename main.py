@@ -40,7 +40,7 @@ def blink_led(times=3):
 
 def insert_time(active):
     try:
-        sql = "insert into alarmSystem (time, isActive) values(CURRENT_TIMESTAMP , %s);"
+        sql = "insert into alarm_System (time, isActive) values(CURRENT_TIMESTAMP , %s);"
         cursor.execute(sql, str(active))
         db.commit()
     except cursor.Error:

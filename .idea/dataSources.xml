@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="MySQL for 5.1 - testDB@raspberrypi.local" uuid="849e6177-891d-4418-a49d-bd9bab0904bf">
+    <data-source source="LOCAL" name="Raspberry" uuid="cff956ce-3ef6-432d-9ca4-a1ef01b5a1f5">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://raspberrypi.local:3306/testDB</jdbc-url>
+      <jdbc-url>jdbc:mysql://tomsds218.myds.me:3306/testDB</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="CONVERT_TO_NULL" />
