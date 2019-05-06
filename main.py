@@ -21,37 +21,29 @@ db = MySQLdb.connect(host="localhost",
                      user="mySQL",
                      passwd="password",
                      db="testDB")
-cursor = db.cursor()
 
 # Initialisierung
 Read = 0
 State = 0
 
+# Curser Initialisierung
+cursor = db.cursor()
 
 def blink_led(times=3):
+    insert_time(1)
     for _ in range(times):
         GPIO.output(LED_PIN, GPIO.HIGH)
         time.sleep(0.5)
         GPIO.output(LED_PIN, GPIO.LOW)
         time.sleep(0.5)
 
-
-# JUST FOR TESTING REASONS:
-# -----------------------------------------------------------------
-# you must create a Cursor object. It will let
-# you execute all the queries you need
-cursor = db.cursor()
-
-# Use all the SQL you like
-cursor.execute("SELECT * FROM testTable;")
-
-# print all the first cell of all the rows
-# for row in cursor.fetchall():
-#     print row[0]
-
-# db.close()
-
-# -----------------------------------------------------------------
+def insert_time(active):
+    try:
+        sql = "insert into alarmSystem (time, isActive) values(CURRENT_TIMESTAMP , %s);"
+        cursor.execute(sql, str(active))
+        db.commit()
+    except cursor.Error:
+        print cursor.Error.message
 
 try:
     print("Waiting, until PIR is in sleep mode ...")
@@ -66,7 +58,7 @@ try:
         if State == 1 and Read == 0:
             State = 0
             print("Switching alarm off...")
-            # cursor.execute ("")
+            insert_time(0)
             time.sleep(0.5)
         elif Read == 1:
             State = 1
@@ -77,3 +69,4 @@ except KeyboardInterrupt:
     print("Stopping...")
     # db.close
     GPIO.cleanup()
+    db.close()
