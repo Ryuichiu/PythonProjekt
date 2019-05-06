@@ -29,13 +29,14 @@ State = 0
 # Curser Initialisierung
 cursor = db.cursor()
 
+
 def blink_led(times=3):
-    insert_time(1)
     for _ in range(times):
         GPIO.output(LED_PIN, GPIO.HIGH)
         time.sleep(0.5)
         GPIO.output(LED_PIN, GPIO.LOW)
         time.sleep(0.5)
+
 
 def insert_time(active):
     try:
@@ -43,7 +44,8 @@ def insert_time(active):
         cursor.execute(sql, str(active))
         db.commit()
     except cursor.Error:
-        print cursor.Error.message
+        print(cursor.Error.message)
+
 
 try:
     print("Waiting, until PIR is in sleep mode ...")
@@ -53,7 +55,7 @@ try:
         time.sleep(0.5)
     print("Start monitoring...")
 
-    while True:  # TODO: Blinks twice 3 times, don't know why...
+    while True:
         Read = GPIO.input(MOTION_SENSOR_PIN)
         if State == 1 and Read == 0:
             State = 0
@@ -63,6 +65,7 @@ try:
         elif Read == 1:
             State = 1
             print("Motion recognized, starting alarm...")
+            insert_time(1)
             blink_led()
 
 except KeyboardInterrupt:
