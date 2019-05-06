@@ -40,11 +40,12 @@ def blink_led(times=3):
 
 def insert_time(active):
     try:
-        sql = "insert into alarm_System (time, isActive) values(CURRENT_TIMESTAMP , %s);"
-        cursor.execute(sql, str(active))
+        #sql = "insert into alarm_system (is_active) values(%s);"
+        cursor.execute("insert into alarm_system (is_active) values(1);") if active else\
+            cursor.execute("insert into alarm_system (is_active) values (0)")
         db.commit()
-    except cursor.Error:
-        print(cursor.Error.message)
+    except cursor.MySQLError:
+        print(cursor.MySQLError)
 
 
 try:
@@ -54,6 +55,8 @@ try:
     while GPIO.input(MOTION_SENSOR_PIN) != 0:
         time.sleep(0.5)
     print("Start monitoring...")
+    insert_time(0)
+    insert_time(1)
 
     while True:
         Read = GPIO.input(MOTION_SENSOR_PIN)
