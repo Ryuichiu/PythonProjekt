@@ -18,9 +18,10 @@ GPIO.setup(MOTION_SENSOR_PIN, GPIO.IN)
 
 # Datenbank
 db = MySQLdb.connect(host="localhost",
-                     user="john",
-                     passwd="megajonhy",
-                     db="jonhydb")
+                     user="mySQL",
+                     passwd="password",
+                     db="testDB")
+cursor = db.cursor()
 
 # Initialisierung
 Read = 0
@@ -38,17 +39,17 @@ def blink_led(times=3):
 # JUST FOR TESTING REASONS:
 # -----------------------------------------------------------------
 # you must create a Cursor object. It will let
-#  you execute all the queries you need
+# you execute all the queries you need
 cursor = db.cursor()
 
 # Use all the SQL you like
-cursor.execute("SELECT * FROM YOUR_TABLE_NAME")
+cursor.execute("SELECT * FROM testTable;")
 
 # print all the first cell of all the rows
-for row in cursor.fetchall():
-    print row[0]
+# for row in cursor.fetchall():
+#     print row[0]
 
-db.close()
+# db.close()
 
 # -----------------------------------------------------------------
 
@@ -65,6 +66,7 @@ try:
         if State == 1 and Read == 0:
             State = 0
             print("Switching alarm off...")
+            # cursor.execute ("")
             time.sleep(0.5)
         elif Read == 1:
             State = 1
@@ -73,4 +75,5 @@ try:
 
 except KeyboardInterrupt:
     print("Stopping...")
+    # db.close
     GPIO.cleanup()
